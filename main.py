@@ -1,3 +1,10 @@
+'''
+Author: shuijing
+Date: 2019-7
+E-mail: 1134794665@qq.com
+Last-Edit_Time: 2019-9-28
+'''
+
 import ctypes
 import random
 import os
@@ -19,9 +26,18 @@ if len(music_list) == 0:
     input("\n按回车键退出......")
     sys.exit(1)
 
-music_name = random.choice(music_list)
-print("正在播放 %s" % music_name)
-ctypes.windll.winmm.mciSendStringW(r"open %s alias s" % os.path.join(music_path, music_name), None, 0, None)
-ctypes.windll.winmm.mciSendStringW(r"play s repeat", None, 0, None)
+while True:
+    music_name = random.choice(music_list)
+    print("正在播放 %s" % music_name)
+    ctypes.windll.winmm.mciSendStringW(r"open %s alias s" % os.path.join(music_path, music_name), None, 0, None)
+    ctypes.windll.winmm.mciSendStringW(r"play s repeat", None, 0, None) # 循环播放
+    # ctypes.windll.winmm.mciSendStringW(r"stop %s alias s" % os.path.join(music_path, music_name), None, 0, None)
 
-input("\n按回车键退出......")
+    input("\n按回车键播放下一首......")
+    ctypes.windll.winmm.mciSendStringW(r"stop s", None, 0, None)
+    ctypes.windll.winmm.mciSendStringW(r"close s", None, 0, None)
+    os.system("cls")
+    # if input("\n按回车键播放下一首......"):
+    # ctypes.windll.winmm.mciSendStringW(r"stop %s alias s" % os.path.join(music_path, music_name), None, 0, None)
+    #     continue
+    
